@@ -16,8 +16,6 @@ var connection = mysql.createConnection({
     database: "adpp",
     insecureAuth : true
 });
-
-
 //
 // router.get("/", function (req,res) {
 //     var query = "Select courseName,credits,description,department,semester from course where course.offered = 1";

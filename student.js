@@ -44,6 +44,8 @@ function getCourses(){
     root.appendChild(pageTitle);
 
 
+
+
     $.getJSON("http://localhost:3000/course/",function (data) {
         data.forEach(function (item) {
             var card =document.createElement("div");
