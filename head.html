@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="index.css" rel="stylesheet">
+<title>head</title>
+<body>
+
+
+    <div class="jumbotron jumbotron-fluid" style= "background-color: #B2DCE3;">
+        <div class="container">
+            <button class="btn btn-dark btn-rounded float-right" onclick="signout()">Sign Out</button>
+            <h1 id="header" class="display-4">Automated Degree Progress Planner</h1>
+        </div>
+    </div>
+
+
+
+
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+          apiKey: "AIzaSyA-N8VfQRzeH6Vv5L54CfheIWplHGNKdYM",
+          authDomain: "exercise9-1171e.firebaseapp.com",
+          databaseURL: "https://exercise9-1171e.firebaseio.com",
+          projectId: "exercise9-1171e",
+          storageBucket: "exercise9-1171e.appspot.com",
+          messagingSenderId: "288025175207",
+          appId: "1:288025175207:web:6b1f72a2ebb291500be782",
+          measurementId: "G-MS4K26BDEJ"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+      </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="index.js"></script>
+
+</body>
+
+</html>
