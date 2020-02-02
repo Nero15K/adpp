@@ -61,7 +61,7 @@ router.get("/filter", function (req,res) {
 
 router.get("/head", function (req,res) {
 
-    var headID = req.body.headID;
+    var headID = req.query.headID;
     var query;
 
     query = "Select id,courseName,description,department,offered from course,department where course.department = department.name and department.headID = ?";
