@@ -62,11 +62,12 @@ router.get("/filter", function (req,res) {
 router.get("/head", function (req,res) {
 
     var headID = req.query.headID;
+    var semester = req.query.semester;
     var query;
 
-    query = "Select id,courseName,description,department,offered from course,department where course.department = department.name and department.headID = ?";
+    query = "Select id,courseName,description,department,offered from course,department where course.department = department.name and department.headID = ? and semester = ?";
 
-    connection.query(query,[headID], function (error,result) {
+    connection.query(query,[headID,semester], function (error,result) {
         if (error){
             console.log("Error");
             console.log(error);
