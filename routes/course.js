@@ -65,6 +65,7 @@ router.get("/head", function (req,res) {
     var semester = req.query.semester;
     var query;
 
+
     query = "Select id,courseName,description,department,offered from course,department where course.department = department.name and department.headID = ? and semester = ?";
 
     connection.query(query,[headID,semester], function (error,result) {
