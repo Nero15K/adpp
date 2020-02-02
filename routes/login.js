@@ -30,12 +30,9 @@ var connection = mysql.createConnection({
 });
 
 router.get("/", function (req,res) {
-    // var params =[{
-    //     id: req.body.id,
-    // },req.body.password];
 
-    var userID = req.body.id;
-    var userPassword = req.body.password;
+    var userID = req.query.id;
+    var userPassword = req.query.password;
     var query = "Select id from users where id = ? and password = ?";
     connection.query(query,[userID,userPassword], function (error,result) {
         if (error){

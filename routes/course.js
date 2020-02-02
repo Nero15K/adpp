@@ -17,38 +17,42 @@ var connection = mysql.createConnection({
     insecureAuth : true
 });
 //
-// router.get("/", function (req,res) {
-//     var query = "Select courseName,credits,description,department,semester from course where course.offered = 1";
-//     connection.query(query, function (error,result) {
-//         if (error){
-//             console.log("Die")
-//         }
-//         console.log(result.length);
-//         console.log(error);
-//         console.log(query);
-//         console.log(result);
-//         res.send(result);
-//     });
-// });
-
-
 router.get("/", function (req,res) {
-
-    courseModule.getCourse(req,function (result) {
-        //console.log(result)
-        res.send(result)
-    },
-        function (err) {
-            console.log(err);
-            res.send(err);
-        })
+    var query = "Select courseName,credits,description,department,semester from course where course.offered = 1";
+    connection.query(query, function (error,result) {
+        if (error){
+            console.log("Die")
+        }
+        console.log(result.length);
+        console.log(error);
+        console.log(query);
+        console.log(result);
+        res.send(result);
+    });
 });
+
+
+// router.get("/", function (req,res) {
+//
+//     courseModule.getCourse(req,function (result) {
+//         //console.log(result)
+//         res.send(result)
+//     },
+//         function (err) {
+//             console.log(err);
+//             res.send(err);
+//         })
+// });
 
 router.get("/filter", function (req,res) {
 
-    var department = req.body.department;
-
-    var query = "Select courseName,description,department from course where course.department = ? and offered = 1";
+    var department = req.query.department;
+    var query;
+    if (department.trim() === "ALL"){
+         query = "Select courseName,description,department from course where offered = 1";
+    }else{
+        query = "Select courseName,description,department from course where course.department = ? and offered = 1";
+    }
     connection.query(query,[department], function (error,result) {
         if (error){
             console.log("Die")
@@ -65,15 +69,22 @@ router.get("/filter", function (req,res) {
     });
 });
 
-// router.get("/filter", function (req,res) {
-//
-//     courseModule.filterCourse(req,function (result) {
-//             console.log(result)
-//             res.send(result)
-//         },
-//         function (err) {
-//             console.log(err);
-//             res.send(err);
-//         })
-// });
+
+router.put("/",function (req, res) {
+    var offered = req.body.offered;
+    var id = req.body.id;
+    var query = "update course set offered = ? where id = ?";
+
+    connection.query(query,[offered,id], function (error,result) {
+        if (error){
+            console.log(error)
+        }
+        console.log(result)
+        courseModule.getCourse(req,res);
+        res.send(result);
+    });
+
+
+});
+
 module.exports = router;
