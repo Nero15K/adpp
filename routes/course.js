@@ -32,17 +32,6 @@ router.get("/", function (req,res) {
 });
 
 
-// router.get("/", function (req,res) {
-//
-//     courseModule.getCourse(req,function (result) {
-//         //console.log(result)
-//         res.send(result)
-//     },
-//         function (err) {
-//             console.log(err);
-//             res.send(err);
-//         })
-// });
 
 router.get("/filter", function (req,res) {
 
@@ -65,6 +54,29 @@ router.get("/filter", function (req,res) {
         //console.log(error);
         //console.log(query);
         //console.log(result);
+        res.send(result);
+    });
+});
+
+
+router.get("/head", function (req,res) {
+
+    var headID = req.body.headID;
+    var query;
+
+    query = "Select id,courseName,description,department,offered from course,department where course.department = department.name and department.headID = ?";
+
+    connection.query(query,[headID], function (error,result) {
+        if (error){
+            console.log("Error");
+            console.log(error);
+            res.send(error);
+        }
+
+        //console.log(result.length);
+        //console.log(error);
+        //console.log(query);
+        console.log(result);
         res.send(result);
     });
 });
