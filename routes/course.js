@@ -84,21 +84,40 @@ router.get("/head", function (req,res) {
 });
 
 
+router.get("/semester", function (req,res) {
+
+    var query = " select distinct course.semester from course";
+    connection.query(query, function (error,result) {
+        if(error){
+            console.log(error);
+            res.send(error);
+        }
+        else{
+            console.log(result);
+            res.send(result);
+        }
+    });
+
+});
+
+
 router.put("/",function (req, res) {
     var offered = req.body.offered;
-    var id = req.body.id;
-    var query = "update course set offered = ? where id = ?";
+    var courseName = req.body.courseName;
+    var semester = req.body.semester;
+    var query = "update course set offered = ? where courseName = ? and semester =?";
 
-    connection.query(query,[offered,id], function (error,result) {
+    connection.query(query,[offered,courseName,semester], function (error,result) {
         if (error){
             console.log(error)
         }
-        console.log(result)
-        courseModule.getCourse(req,res);
+        console.log(result);
+        ///courseModule.getCourse(req,res);
+        console.log("sending");
         res.send(result);
     });
-
-
 });
+
+
 
 module.exports = router;
