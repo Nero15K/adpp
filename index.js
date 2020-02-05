@@ -59,6 +59,7 @@ function coursesPage() {
 
         data.forEach(function (item) {
 
+
             let link = document.createElement("a");
             link.innerHTML = item.semester;
             link.href = "#";
@@ -121,20 +122,14 @@ function loadCourses(link) {
 };
 
 save = () => {
-    ///console.log("hi")
+
     let content = document.getElementById("courses");
-   // let semester = document.getElementById("semName").innerHTML;
     console.log(content.children);
     for(let i = 1; i < content.children.length,i++;) {
-           /// console.log("hi agagin")
+
             var item = content.children[i];
 
             let offered;
-            //console.log(item.children[0].children[0]);
-            ///console.log("Nizarrrrrrrrrrrrrrrr "+item.children[0].children[1].checked);
-
-            ///console.log("child at [0][0]: "+item.children[0].children[1].checked);
-
             try{
                 var flag = item.children[0].children[1].checked;
             }
@@ -149,9 +144,6 @@ save = () => {
         catch (e) {
             console.log("Error: "+e);
         }
-
-
-
             console.log(flag);
 
             if (flag) {
@@ -164,27 +156,21 @@ save = () => {
             // console.log(item);
 
             // console.log(item.id);
-         try{
+            console.log(item.children[0].children[0].textContent);
              let param = {
-                 courseName: item.children[0].children[0].textContent,
+                 courseName:item.children[0].children[0].textContent ,
                  semester: item.id,
                  offered
              };
-
-
-
-             console.log("param "+param.courseName);
+          ///   console.log("param "+param.courseName);
 
              $.put("http://localhost:3000/course/", param, function (data) {
-                 console.log(data);
+                 ///console.log(data);
+                 console.log(param);
                  console.log("data sent");
 
-             })
-         }
-            catch (e) {
-                console.log("Put Error " + e);
-                return;
-            }
+             });
+
 
 
     }
