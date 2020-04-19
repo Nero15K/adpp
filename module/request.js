@@ -2,22 +2,22 @@ const common = require('../helper/common');
 //
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "123456789",
+    host: "166.62.27.55",
+    user: "nizar",
+    password: "12345",
     database: "adpp",
     insecureAuth : true
 });
 
 
 function getHOD(req,res) {
-    var department =req.body.department;
+    var department =req.query.department;
     var query = "Select headID from department where department.name = ?";
     connection.query(query, [department],function (error,result) {
         if (error){
             console.log(Error)
         }
-        console.log(result);
+        console.log("HEAD ID: "+result);
         res.send(result);
     });
 

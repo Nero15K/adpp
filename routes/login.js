@@ -22,9 +22,9 @@ const loginModule = require('../module/login');
 // });
 
 var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "123456789",
+    host: "166.62.27.55",
+    user: "nizar",
+    password: "12345",
     database: "adpp",
     //insecureAuth : true
 });

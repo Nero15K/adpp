@@ -10,19 +10,20 @@ const courseModule = require('../module/course');
 
 
 var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "123456789",
+    host: "166.62.27.55",
+    user: "nizar",
+    password: "12345",
     database: "adpp",
     insecureAuth : true
 });
 
 
+/// Get all departments
 router.get("/", function (req,res) {
 
     var department = req.query.department;
 
-    var query = "Select name from department";
+    var query = "Select * from department";
     connection.query(query,[department], function (error,result) {
         if (error){
             console.log("Die")

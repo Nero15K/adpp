@@ -8,8 +8,6 @@ document.addEventListener('DOMContentLoaded', async function (event) {
 });
 
 
-
-
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         // User is signed in.
@@ -68,7 +66,6 @@ function coursesPage() {
             link.addEventListener("click",()=>loadCourses(link))
             console.log(this);
             side.appendChild(link);
-
         })
 
     })
@@ -129,6 +126,9 @@ save = () => {
 
             var item = content.children[i];
 
+            var itemText = content.children[i].children[0].children[0].textContent;
+            console.log(itemText);
+            console.log("item is: "+ item);
             let offered;
             try{
                 var flag = item.children[0].children[1].checked;
@@ -154,7 +154,6 @@ save = () => {
                 console.log(offered);
             }
             // console.log(item);
-
             // console.log(item.id);
             console.log(item.children[0].children[0].textContent);
              let param = {
@@ -162,7 +161,6 @@ save = () => {
                  semester: item.id,
                  offered
              };
-          ///   console.log("param "+param.courseName);
 
              $.put("http://localhost:3000/course/", param, function (data) {
                  ///console.log(data);
@@ -174,7 +172,7 @@ save = () => {
 
 
     }
-}
+};
 
 
 jQuery.each(["put", "delete"], function (i, method) {
@@ -203,9 +201,6 @@ jQuery.each(["put", "delete"], function (i, method) {
             data: data,
 
             success: callback
-
         });
-
-    };
-
+    }
 });
