@@ -4,9 +4,9 @@ var db = require('mysql');
 const app = express();
 var mysql = require('mysql');
 // import common from 'helper';
-const common = require('../helper/common');
-const courseModule = require('../module/course');
-const loginModule = require('../module/login');
+// const common = require('../helper/common');
+// const courseModule = require('../module/course');
+// const loginModule = require('../module/login');
 
 
 // router.get("/", function (req,res) {

@@ -4,8 +4,8 @@ var db = require('mysql');
 const app = express();
 var mysql = require('mysql');
 // import common from 'helper';
-const common = require('../helper/common');
-const courseModule = require('../module/course');
+// const common = require('../helper/common');
+// const courseModule = require('../module/course');
 
 
 
