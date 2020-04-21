@@ -9,7 +9,7 @@ var mysql = require('mysql');
 
 
 
-var connection = mysql.createConnection({
+var connection = mysql.createPool({
     host: "166.62.27.55",
     user: "nizar",
     password: "12345",
@@ -30,6 +30,8 @@ router.get("/", function (req,res) {
         }
         console.log(result);
         res.send(result);
+
+        if (error) throw error;
     });
 });
 
