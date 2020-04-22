@@ -30,6 +30,58 @@ router.get("/", function (req,res) {
 });
 
 
+
+// gets requests made by students for specific head
+router.get("/headByStudent", function (req,res) {
+    var headID = req.query.headID;
+
+    var query = "Select * from request where headID = ? and studentID is not null ";
+    connection.query(query,[headID], function (error,result) {
+        if (error){
+            console.log("Die")
+        }
+        console.log(result);
+        res.send(result);
+    });
+});
+
+
+//get all requests made by a specific head
+router.get("/head", function (req,res) {
+    var headID = req.query.headID;
+
+    var query = "Select * from request where headID = ? and studentID is null ";
+    connection.query(query,[headID], function (error,result) {
+        if (error){
+            console.log("Die")
+        }
+        console.log(result);
+        res.send(result);
+    });
+});
+
+
+//get all requests made by all heads
+router.get("/AllHeads", function (req,res) {
+
+
+    var query = "Select * from request where studentID is null ";
+    connection.query(query, function (error,result) {
+        if (error){
+            console.log("Die")
+        }
+        console.log(result);
+        res.send(result);
+    });
+});
+
+
+
+
+
+
+
+
 // get requests submitted by a specific student (By passing studentID as parameter)
 router.get("/student", function (req,res) {
     var department = req.query.studentID;
@@ -43,6 +95,25 @@ router.get("/student", function (req,res) {
         res.send(result);
     });
 });
+
+
+// get all requests by students
+router.get("/AllStudents", function (req,res) {
+
+
+    var query = "Select * from request where studentID IS NOT NULL";
+    connection.query(query, function (error,result) {
+        if (error){
+            console.log("Die")
+        }
+        console.log(result);
+        res.send(result);
+    });
+});
+
+
+
+
 
 
 //get details of a request (by passing its id as parameter)
@@ -161,6 +232,9 @@ router.post('/student', function (req,res) {
             res.send(result);
         });
 });
+
+
+
 
 
 
