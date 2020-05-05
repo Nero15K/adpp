@@ -52,15 +52,14 @@ router.get("/", function (req,res) {
 
 
     var query = "select courseName, department, priority from course where (prerequisite =" +params.prerequisite+" or prerequisite = "+
-        params.prerequisite2 +" or prerequisite = "+ params.prerequisite3 + ") and prerequisite2 is null and offered =1  and coreq = 0 union" +
+        params.prerequisite2 +" or prerequisite = "+ params.prerequisite3 + ") and prerequisite2 is null and offered =1   union" +
 
         " "+"select courseName, department,priority from course where prerequisite is null and (course.id > "
         + params.prerequisite + " or course.id >" +params.prerequisite2+" or course.id >" +params.prerequisite3+
-        " ) and (course.id != "+ params.prerequisite + " and course.id !=" +params.prerequisite2+" and course.id !=" +params.prerequisite3+ " ) and offered = 1 and coreq = 0 union "
+        " ) and (course.id != "+ params.prerequisite + " and course.id !=" +params.prerequisite2+" and course.id !=" +params.prerequisite3+ " ) and offered = 1  union "
 
-        +"select courseName, department,priority from course where (prerequisite =" +params.prerequisite+" and prerequisite2 = "+ params.prerequisite2 + ") and offered =1 and coreq = 0 union " +
-        "select courseName, department ,priority from course where  (prerequisite =" +params.prerequisite+" or prerequisite = "+
-        params.prerequisite2 +" or prerequisite = "+ params.prerequisite3 + ") and prerequisite2 is null and offered =1  and coreq = 1 order by priority, courseName" +""
+        +"select courseName, department,priority from course where (prerequisite =" +params.prerequisite+" and prerequisite2 = "+ params.prerequisite2 + ") and offered =1   " +
+        " order by priority, courseName" +""
         // "select  courseName, department from course cos  where not exists(select history.studentID from history where id = history.courseID and history.studentID =15000  )"
         //
     //
@@ -176,6 +175,9 @@ function fillEX() {
 
     })
 };
+
+
+
 
 
 
