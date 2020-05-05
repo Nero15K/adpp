@@ -18,7 +18,7 @@ var connection = mysql.createPool({
     insecureAuth : true
 });
 
-// returns course name department and time for user 15000
+// returns course name department for a user given their prerequisites returned from /prerequisites
 router.get("/", function (req,res) {
     // var query = "select name from tree where (parentID1 = 2 or parentID1 = 15) and offered = 1 union Select name from tree where parentID1 = 0  and ( id > 2 and id !=15) and offered = 1";
 
@@ -51,17 +51,49 @@ router.get("/", function (req,res) {
 
 
 
-    var query = "select courseName, department, course.time from course where (prerequisite =" +params.prerequisite+" or prerequisite = "+ params.prerequisite2 +" or prerequisite = "+ params.prerequisite3 + ") and prerequisite2 is null and offered =1  and coreq = 0 union "+"select courseName, department, course.time from course where prerequisite is null and (course.id > "+ params.prerequisite + " or course.id >" +params.prerequisite2+" or course.id >" +params.prerequisite3+ " ) and (course.id != "+ params.prerequisite + " and course.id !=" +params.prerequisite2+" and course.id !=" +params.prerequisite3+ " ) and offered = 1 and coreq = 0 union " +"select courseName, department, course.time from course where (prerequisite =" +params.prerequisite+" and prerequisite2 = "+ params.prerequisite2 + ") and offered =1 and coreq = 0";
+    var query = "select courseName, department, priority from course where (prerequisite =" +params.prerequisite+" or prerequisite = "+
+        params.prerequisite2 +" or prerequisite = "+ params.prerequisite3 + ") and prerequisite2 is null and offered =1  and coreq = 0 union" +
+
+        " "+"select courseName, department,priority from course where prerequisite is null and (course.id > "
+        + params.prerequisite + " or course.id >" +params.prerequisite2+" or course.id >" +params.prerequisite3+
+        " ) and (course.id != "+ params.prerequisite + " and course.id !=" +params.prerequisite2+" and course.id !=" +params.prerequisite3+ " ) and offered = 1 and coreq = 0 union "
+
+        +"select courseName, department,priority from course where (prerequisite =" +params.prerequisite+" and prerequisite2 = "+ params.prerequisite2 + ") and offered =1 and coreq = 0 union " +
+        "select courseName, department ,priority from course where  (prerequisite =" +params.prerequisite+" or prerequisite = "+
+        params.prerequisite2 +" or prerequisite = "+ params.prerequisite3 + ") and prerequisite2 is null and offered =1  and coreq = 1 order by priority, courseName" +""
+        // "select  courseName, department from course cos  where not exists(select history.studentID from history where id = history.courseID and history.studentID =15000  )"
+        //
+    //
+    // var excludedSector;
+    //
+    // var exquery = "select  courseName, department from course except select  courseName, department from course cos  where exists(select history.studentID from history where cos.id = history.courseID and history.studentID =15000)"
+    //
+    // connection.query(exquery, params, function (error,result){
+    //     console.log(exquery);
+    //
+    //     if(error){
+    //         console.log(error);
+    //     }
+    //     else{
+    //         console.log(result);
+    //         res.send(result);
+    //     }
+    //
+    // });
 
 
-
-    connection.query(query, params, function (error,result) {
+    connection.query(query, params,  function (error,result) {
         console.log(query);
 
         if (error){
             console.log(error)
+            res.send(error)
         }
+
+
         else {
+
+
 
             console.log(result);
             res.send(result);
@@ -71,6 +103,8 @@ router.get("/", function (req,res) {
 
 
 
+//// returns the last prerequisites that will be passed to the generate function, and maximum number of courses this student can register in
+// (minimum can be any number but stick with 3 for now)
 router.get("/prerequisites",function (req,res) {
 
     var userID = req.query.userID;
@@ -92,6 +126,59 @@ router.get("/prerequisites",function (req,res) {
 
     })
 });
+
+
+
+
+///// returns the duplicated courses that has to be excluded
+router.get("/exclusions",function (req,res) {
+
+    var studentID = req.query.studentID;
+
+
+    var query = "select  courseName, department from course cos  where exists(select history.studentID from history where cos.id = history.courseID and history.studentID =?)";
+
+
+    connection.query(query,[studentID],function (err, results) {
+        console.log(query);
+
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log(results);
+
+            res.send(results);
+        }
+
+    })
+});
+
+
+///var exc = fillEX();
+
+function fillEX() {
+
+    var query = "select  courseName, department from course cos  where exists(select history.studentID from history where cos.id = history.courseID and history.studentID =15000)";
+
+
+    connection.query(query,function (err, results) {
+        console.log(query);
+
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log(results);
+
+            exc = (results);
+        }
+
+    })
+};
+
+
+
 
 
 module.exports = router;
