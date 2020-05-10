@@ -48,7 +48,7 @@ router.get("/", function (req,res) {
         prerequisite2:req.query.prerequisite2,
         prerequisite3:req.query.prerequisite3,
         prerequisite4:req.query.prerequisite4,
-        subjectsInCourse:req.query.subjectsInCourse
+        coursesInSemester:req.query.coursesInSemester
     };
 
 
@@ -61,7 +61,7 @@ router.get("/", function (req,res) {
         " ) and (course.id != "+ params.prerequisite + " and course.id !=" +params.prerequisite2+" and course.id !=" +params.prerequisite3+ " ) and offered = 1  union "
 
         +"select courseName, department,priority, core from course where (prerequisite =" +params.prerequisite+" and prerequisite2 = "+ params.prerequisite2 + ") and offered =1 union  " +
-        "select courseName, department, priority, core from course where prerequisite = "+ params.prerequisite4 +" order by core DESC ,priority, courseName limit " +params.subjectsInCourse +""
+        "select courseName, department, priority, core from course where prerequisite = "+ params.prerequisite4 +" order by core DESC ,priority, courseName limit " +params.coursesInSemester +""
         // "select  courseName, department from course cos  where not exists(select history.studentID from history where id = history.courseID and history.studentID =15000  )"
         //
     //
@@ -112,7 +112,7 @@ router.get("/subs", function (req,res) {
         prerequisite2:req.query.prerequisite2,
         prerequisite3:req.query.prerequisite3,
         prerequisite4:req.query.prerequisite4,
-        subjectsInCourse:req.query.subjectsInCourse
+        coursesInSemester:req.query.coursesInSemester
     };
 
 
@@ -137,7 +137,7 @@ router.get("/subs", function (req,res) {
 
 
         else {
-            result.splice(0, params.subjectsInCourse);
+            result.splice(0, params.coursesInSemester);
             console.log(result);
             res.send(result);
         }
