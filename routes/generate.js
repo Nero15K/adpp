@@ -46,7 +46,8 @@ router.get("/", function (req,res) {
     var params ={
         prerequisite:req.query.prerequisite1,
         prerequisite2:req.query.prerequisite2,
-        prerequisite3:req.query.prerequisite3
+        prerequisite3:req.query.prerequisite3,
+        subs:req.query.subs
     };
 
 
@@ -59,7 +60,7 @@ router.get("/", function (req,res) {
         " ) and (course.id != "+ params.prerequisite + " and course.id !=" +params.prerequisite2+" and course.id !=" +params.prerequisite3+ " ) and offered = 1  union "
 
         +"select courseName, department,priority from course where (prerequisite =" +params.prerequisite+" and prerequisite2 = "+ params.prerequisite2 + ") and offered =1   " +
-        " order by priority, courseName" +""
+        " order by priority, courseName limit " +params.subs +""
         // "select  courseName, department from course cos  where not exists(select history.studentID from history where id = history.courseID and history.studentID =15000  )"
         //
     //
@@ -81,7 +82,7 @@ router.get("/", function (req,res) {
     // });
 
 
-    connection.query(query, params,  function (error,result) {
+    connection.query(query, params,  async function (error,result) {
         console.log(query);
 
         if (error){
@@ -92,13 +93,73 @@ router.get("/", function (req,res) {
 
         else {
 
-
-
+            //console.log(result.remove(0))
+            //console.log(params.subs)
+           //result.splice(0, params.subs);
+           // await(5000);
             console.log(result);
             res.send(result);
         }
     });
 });
+
+
+
+router.get("/subs", function (req,res) {
+    var params ={
+        prerequisite:req.query.prerequisite1,
+        prerequisite2:req.query.prerequisite2,
+        prerequisite3:req.query.prerequisite3,
+        subs:req.query.subs
+    };
+
+
+
+    var query = "select courseName, department, priority from course where (prerequisite =" +params.prerequisite+" or prerequisite = "+
+        params.prerequisite2 +" or prerequisite = "+ params.prerequisite3 + ") and prerequisite2 is null and offered =1   union" +
+
+        " "+"select courseName, department,priority from course where prerequisite is null and (course.id > "
+        + params.prerequisite + " or course.id >" +params.prerequisite2+" or course.id >" +params.prerequisite3+
+        " ) and (course.id != "+ params.prerequisite + " and course.id !=" +params.prerequisite2+" and course.id !=" +params.prerequisite3+ " ) and offered = 1  union "
+
+        +"select courseName, department,priority from course where (prerequisite =" +params.prerequisite+" and prerequisite2 = "+ params.prerequisite2 + ") and offered =1   " +
+        " order by priority, courseName" +""
+
+    connection.query(query, params,  async function (error,result) {
+        console.log(query);
+
+        if (error){
+            console.log(error)
+            res.send(error)
+        }
+
+
+        else {
+            result.splice(0, params.subs);
+            console.log(result);
+            res.send(result);
+        }
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
