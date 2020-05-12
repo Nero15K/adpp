@@ -53,15 +53,15 @@ router.get("/", function (req,res) {
 
 
     if(params.prerequisite!=50){
-        var query = "select courseName, department, priority, core from course where (prerequisite =" +params.prerequisite+" or prerequisite = "+
+        var query = "select courseName, department, priority, core, adpp.course.year from course where (prerequisite =" +params.prerequisite+" or prerequisite = "+
             params.prerequisite2 +" or prerequisite = "+ params.prerequisite3 + ") and prerequisite2 is null and offered =1   union" +
 
-            " "+"select courseName, department,priority, core from course where prerequisite is null and (course.id > "
+            " "+"select courseName, department,priority, core, adpp.course.year from course where prerequisite is null and (course.id > "
             + params.prerequisite + " or course.id >" +params.prerequisite2+" or course.id >" +params.prerequisite3+
             " ) and (course.id != "+ params.prerequisite + " and course.id !=" +params.prerequisite2+" and course.id !=" +params.prerequisite3+ " ) and offered = 1  union "
 
-            +"select courseName, department,priority, core from course where (prerequisite =" +params.prerequisite+" and prerequisite2 = "+ params.prerequisite2 + ") and offered =1 union  " +
-            "select courseName, department, priority, core from course where prerequisite = "+ params.prerequisite4 +" order by core DESC ,priority, courseName limit " +params.coursesInSemester +""
+            +"select courseName, department,priority, core, adpp.course.year from course where (prerequisite =" +params.prerequisite+" and prerequisite2 = "+ params.prerequisite2 + ") and offered =1 union  " +
+            "select courseName, department, priority, core, adpp.course.year from course where prerequisite = "+ params.prerequisite4 +" order by year,core DESC ,priority, courseName limit " +params.coursesInSemester +""
         // "select  courseName, department from course cos  where not exists(select history.studentID from history where id = history.courseID and history.studentID =15000  )"
         //
         //
@@ -96,7 +96,7 @@ router.get("/", function (req,res) {
 
                 //console.log(result.remove(0))
                 //console.log(params.subs)
-                //result.splice(0, params.subs);    
+                //result.splice(0, params.subs);
                 // await(5000);
                 console.log(result);
                 res.send(result);
@@ -146,15 +146,15 @@ router.get("/subs", function (req,res) {
 
 
     if(params.prerequisite !=50){
-        var query = "select courseName, department, priority, core from course where (prerequisite =" +params.prerequisite+" or prerequisite = "+
+        var query = "select courseName, department, priority, core, adpp.course.year from course where (prerequisite =" +params.prerequisite+" or prerequisite = "+
             params.prerequisite2 +" or prerequisite = "+ params.prerequisite3 + ") and prerequisite2 is null and offered =1   union" +
 
-            " "+"select courseName, department,priority, core from course where prerequisite is null and (course.id > "
+            " "+"select courseName, department,priority, core, adpp.course.year from course where prerequisite is null and (course.id > "
             + params.prerequisite + " or course.id >" +params.prerequisite2+" or course.id >" +params.prerequisite3+
             " ) and (course.id != "+ params.prerequisite + " and course.id !=" +params.prerequisite2+" and course.id !=" +params.prerequisite3+ " ) and offered = 1  union "
 
-            +"select courseName, department,priority, core from course where (prerequisite =" +params.prerequisite+" and prerequisite2 = "+ params.prerequisite2 + ") and offered =1 union  " +
-            "select courseName, department, priority, core from course where prerequisite = "+ params.prerequisite4 +" order by core DESC ,priority, courseName"
+            +"select courseName, department,priority, core, adpp.course.year from course where (prerequisite =" +params.prerequisite+" and prerequisite2 = "+ params.prerequisite2 + ") and offered =1 union  " +
+            "select courseName, department, priority, core, adpp.course.year from course where prerequisite = "+ params.prerequisite4 +" order by year,core DESC ,priority, courseName"
 
         connection.query(query, params,   function (error,result) {
             console.log(query);
